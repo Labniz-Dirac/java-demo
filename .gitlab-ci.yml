@@ -11,3 +11,4 @@ mvn_build_job:
   script:
     - mvn package -B -DskipTests
     - cp target/demo.war /opt/cache
+    - pwd
