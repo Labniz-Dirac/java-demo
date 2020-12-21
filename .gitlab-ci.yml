@@ -22,3 +22,4 @@ build_image:
     - java -version
     - mvn -version
     - mvn package -B -DskipTests
+    
