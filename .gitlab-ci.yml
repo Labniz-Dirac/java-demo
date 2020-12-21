@@ -4,6 +4,7 @@ variables:
   REF_NAME: master
   APPLICATION: rpc
   MAVEN_OPTS: "-Djava.awt.headless=true -Dmaven.repo.local=$HOME/.m2/repository"
+  #PATH： "$JAVA_HOME/bin:$PATH"
 
 
 build_image:
