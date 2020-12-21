@@ -10,7 +10,8 @@ build_image:
   stage: build
   only:
     - master
-  tags: jks
+  tags: 
+    - jks
   script:
     - echo ${APPLICATION}
     - mvn package -B -DskipTests
