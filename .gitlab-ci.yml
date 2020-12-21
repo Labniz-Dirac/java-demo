@@ -7,6 +7,9 @@ variables:
   #PATH： "$JAVA_HOME/bin:$PATH"
   JAVA_HOME: "/usr/local/jdk-11.0.7"
 
+before_script:
+  - export JAVA_HOME="${JAVA_HOME}"
+
 build_image:
   stage: build
   only:
