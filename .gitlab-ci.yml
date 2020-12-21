@@ -5,7 +5,7 @@ variables:
   APPLICATION: rpc
   MAVEN_OPTS: "-Djava.awt.headless=true -Dmaven.repo.local=$HOME/.m2/repository"
   #PATH： "$JAVA_HOME/bin:$PATH"
-
+  JAVA_HOME: "/usr/local/jdk-11.0.7"
 
 build_image:
   stage: build
