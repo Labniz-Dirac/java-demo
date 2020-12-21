@@ -14,4 +14,5 @@ build_image:
     - jks
   script:
     - echo ${APPLICATION}
-    - mvn package -B -DskipTests
+    - java -version
+    #- mvn package -B -DskipTests
