@@ -20,4 +20,4 @@ build_image:
   script:
     - echo ${APPLICATION}
     - mvn -version
-    #- mvn package -B -DskipTests
+    - mvn package -B -DskipTests
