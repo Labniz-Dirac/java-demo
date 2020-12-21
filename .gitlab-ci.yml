@@ -6,7 +6,7 @@ variables:
   #MAVEN_OPTS: "-Djava.awt.headless=true -Dmaven.repo.local=$HOME/.m2/repository"
   #PATH： "$JAVA_HOME/bin:$PATH"
   JAVA_HOME: "/usr/local/jdk-11.0.7"
-  GIT_STRATEGY: clone 
+  #GIT_STRATEGY: clone 
   
 before_script:
   - export JAVA_HOME="/usr/local/jdk-11.0.7"
