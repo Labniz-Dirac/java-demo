@@ -3,7 +3,7 @@ image: harbor.mvmyun.com/library/maven:3.6.2-jdk-14
 
 # define job variables at job level
 variables:
-  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+  MAVEN_CLI_OPTS: "-s /.m2/settings.xml --batch-mode"
   MAVEN_OPTS: "-Dmaven.repo.local=/opt/dev/java/repository"
 
 
@@ -25,7 +25,7 @@ package:
   stage: package
   script:
   - echo "======== start package ========"
-  - ls .m2
-  - mvn -Dmaven.test.skip=true package
+  - ll .m2
+  - mvn $MAVEN_CLI_OPTS -Dmaven.test.skip=true package
   tags:
     - jks
