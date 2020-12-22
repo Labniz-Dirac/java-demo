@@ -1,31 +1,16 @@
-# define docker image when run job
-image: harbor.mvmyun.com/library/maven:3.6.2-jdk-14
-
-# define job variables at job level
-variables:
-  MAVEN_CLI_OPTS: "-s /.m2/settings.xml --batch-mode"
-  MAVEN_OPTS: "-Dmaven.repo.local=/.m2/repository"
-
-
-# define list of files that should be cached
-cache:
-  paths:
-  - /.m2/repository/
-  - target/
-
-# defines a job stage(default: test)
+image: docker:stable
 stages:
-- package
-
-
-
-
-# define package job
-package:
+  - package
+  - docker_build
+  - deploy_k8s
+variables:
+  KUBECONFIG: /etc/deploy/config
+  MAVEN_OPTS: "-Dmaven.repo.local=/opt/cache/.m2/repository"
+mvn_build_job:
+  image: maven:3.6.2-jdk-14
   stage: package
-  script:
-  - echo "======== start package ========"
-  - ls /.m2
-  - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
   tags:
     - jks
+  script:
+    - mvn package -B -DskipTests
+    - cp target/demo.war /opt/cache
