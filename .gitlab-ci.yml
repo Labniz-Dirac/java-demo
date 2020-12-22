@@ -6,6 +6,7 @@ variables:
   MAVEN_CLI_OPTS: "-s /opt/dev/java/settings.xml --batch-mode"
   MAVEN_OPTS: "-Dmaven.repo.local=/opt/dev/java/repository"
 
+
 # define list of files that should be cached
 cache:
   paths:
