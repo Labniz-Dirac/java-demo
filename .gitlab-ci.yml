@@ -25,7 +25,7 @@ package:
   stage: package
   script:
   - echo "======== start package ========"
-  # ls .m2
+  - ls .m2
   - mvn -Dmaven.test.skip=true package
   tags:
     - jks
