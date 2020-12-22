@@ -10,7 +10,7 @@ variables:
 # define list of files that should be cached
 cache:
   paths:
-  - /opt/cache/.m2/repository/
+  - /opt/gitlab-runner/cache/.m2/repository/
   - target/
 
 # defines a job stage(default: test)
