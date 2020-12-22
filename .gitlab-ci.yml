@@ -25,6 +25,7 @@ package:
   stage: package
   script:
   - echo "======== start package ========"
-  - mvn $MAVEN_CLI_OPTS -Dmaven.test.skip=true package
+  # ls .m2
+  - mvn -Dmaven.test.skip=true package
   tags:
     - jks
