@@ -24,8 +24,7 @@ stages:
 package:
   stage: package
   script:
-  - echo "======== start package ========"
-  - ls /opt/cache/.m2/
+  #- ls /opt/cache/.m2/
   - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
   - cp target/demo.war /opt/cache
   tags:
