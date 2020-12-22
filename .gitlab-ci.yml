@@ -3,8 +3,8 @@ image: harbor.mvmyun.com/library/maven:3.6.2-jdk-14
 
 # define job variables at job level
 variables:
-  MAVEN_CLI_OPTS: "-gs /.m2/settings.xml --batch-mode"
-  MAVEN_OPTS: "-Dmaven.repo.local=/.m2/repository"
+  MAVEN_CLI_OPTS: "-gs /opt/cache/.m2/settings.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=/opt/cache/.m2/repository"
 
 
 # define list of files that should be cached
