@@ -1,27 +1,29 @@
-variables:
-  HOTEL_QUNAR_API_TOKEN: a7d6a429fe60c5f64588781b543f9d
-  HOTEL_QUNAR_ORDER_TOKEN: 6c898fc00b8d62c9a970c1f79374f5
-  REF_NAME: master
-  APPLICATION: rpc
-  #MAVEN_OPTS: "-Djava.awt.headless=true -Dmaven.repo.local=$HOME/.m2/repository"
-  #PATH： "$JAVA_HOME/bin:$PATH"
-  JAVA_HOME: "/usr/local/jdk-11.0.7"
-  #GIT_STRATEGY: clone 
-  
-  
-before_script:
-  - export JAVA_HOME="/usr/local/jdk-11.0.7"
-  - export PATH="$JAVA_HOME/bin:$PATH"
+# define docker image when run job
+image: harbor.mvmyun.com/library/maven:3.6.2-jdk-14
 
-build_image:
-  stage: build
-  only:
-    - master
-  tags: 
-    - jks
+# define job variables at job level
+variables:
+  MAVEN_CLI_OPTS: "-s /opt/dev/java/settings.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=/opt/dev/java/repository"
+
+# define list of files that should be cached
+cache:
+  paths:
+  - /opt/dev/java/repository/
+  - target/
+
+# defines a job stage(default: test)
+stages:
+- package
+
+
+
+
+# define package job
+package:
+  stage: package
   script:
-    - echo ${APPLICATION}
-    - java -version
-    - mvn -version
-    - mvn package -B -DskipTests
-    
+  - echo "======== start package ========"
+  - mvn $MAVEN_CLI_OPTS -Dmaven.test.skip=true package
+  tags:
+    - jks
