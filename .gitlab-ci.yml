@@ -4,13 +4,13 @@ image: harbor.mvmyun.com/library/maven:3.6.2-jdk-14
 # define job variables at job level
 variables:
   MAVEN_CLI_OPTS: "-s /.m2/settings.xml --batch-mode"
-  MAVEN_OPTS: "-Dmaven.repo.local=/opt/dev/java/repository"
+  MAVEN_OPTS: "-Dmaven.repo.local=/.m2/repository"
 
 
 # define list of files that should be cached
 cache:
   paths:
-  - .m2/repository/
+  - /.m2/repository/
   - target/
 
 # defines a job stage(default: test)
@@ -25,7 +25,7 @@ package:
   stage: package
   script:
   - echo "======== start package ========"
-  - ll .m2
-  - mvn $MAVEN_CLI_OPTS -Dmaven.test.skip=true package
+  - ls /.m2
+  - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
   tags:
     - jks
