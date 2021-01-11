@@ -27,4 +27,4 @@ build1:
     - mkdir /vendor
     - echo "build" > /vendor/hello.txt
     - pwd
-    - ll /
+    - ls /
