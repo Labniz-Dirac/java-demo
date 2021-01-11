@@ -1,29 +1,33 @@
-# define docker image when run job
-image: harbor.mvmyun.com/library/maven:3.6.2-jdk-14
+# 设置执行镜像
+image: harbor.mvmyun.com/library/busybox:latest
 
-# define job variables at job level
-variables:
-  MAVEN_CLI_OPTS: "-gs /opt/gitlab-runner/cache/.m2/settings.xml --batch-mode"
-  MAVEN_OPTS: "-Dmaven.repo.local=/opt/gitlab-runner/cache/.m2/repository"
-
-
-# define list of files that should be cached
-cache:
-  paths:
-  - /opt/gitlab-runner/cache/.m2/repository/
-  - target/
-
-# defines a job stage(default: test)
+# 整个pipeline有两个stage
 stages:
-- package
+- build
+- test
 
+# 定义全局缓存，缓存的key来自分支信息，缓存位置是vendor文件夹
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+  - vendor/
 
-# define package job
-package:
-  stage: package
+before_script:
+  - echo "Before script section"
+
+after_script:
+  - echo "After script section"
+
+build1:
+  stage: build
+    tags:
+  - k8s
   script:
-  #- ll /opt/gitlab-runner/cache/.m2/
-  - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
-  - cp target/demo.war /opt/cache
-  tags:
-    - jks
+    - echo "将内容写入缓存"
+    - echo "build" > vendor/hello.txt
+
+test1:
+  stage: test
+  script:
+    - echo "从缓存读取内容"
+    - cat vendor/hello.txt
