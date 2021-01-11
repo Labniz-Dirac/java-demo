@@ -20,7 +20,7 @@ after_script:
 
 build1:
   stage: build
-    tags:
+  tags:
   - k8s
   script:
     - echo "将内容写入缓存"
