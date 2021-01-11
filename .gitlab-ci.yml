@@ -26,9 +26,5 @@ build1:
     - echo "将内容写入缓存"
     - mkdir /vendor
     - echo "build" > /vendor/hello.txt
-
-test1:
-  stage: test
-  script:
-    - echo "从缓存读取内容"
-    - cat /vendor/hello.txt
+    - pwd
+    - ll /
