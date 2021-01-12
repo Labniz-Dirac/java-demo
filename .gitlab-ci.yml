@@ -48,7 +48,7 @@ build_image_mvn_install:
   #- gradle --stacktrace jib
   - echo ${APPLICATION}
   - mvn -version
-  - mvn -B -q $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
+  - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
   tags:
     - docker
   rules:
