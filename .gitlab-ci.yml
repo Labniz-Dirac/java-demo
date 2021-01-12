@@ -41,7 +41,7 @@ before_script:
 
 build_image_mvn_install:
   stage: build
-  image: ${MAVEN_IMAGE}
+  image: ${BUILD_IMAGE}
   script:
   #- ll /opt/gitlab-runner/cache/.m2/
   #- mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
