@@ -1,7 +1,8 @@
 image: harbor.mvmyun.com/library/alpine:latest
 variables:
   MAVEN_CLI_OPTS: "-gs /opt/settings.xml --batch-mode"
-  MAVEN_OPTS: "-Dmaven.repo.local=/opt/cache/.m2/repository -Xms1g -Xmx1g -XX:PermSize=256m -XX:MaxPermSize=512M"
+  MAVEN_OPTS: "-Dmaven.repo.local=/opt/cache/.m2/repository"
+  JVM: "-Xms1g -Xmx1g -XX:PermSize=256m -XX:MaxPermSize=512M"
   #发版dev测试环境
   K8S_ENVIRONMENT: dev
   #发版应用
@@ -42,6 +43,6 @@ package:
   #- gradle --stacktrace jib
   - ls /opt
   - ls /opt/cache/.m2/repository
-  - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
+  - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS $JVM -Dmaven.test.skip=true package
   tags:
     - docker
