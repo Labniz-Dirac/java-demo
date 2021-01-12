@@ -35,6 +35,6 @@ package:
   #- mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
   #- mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
   #- gradle --stacktrace jib
-  - ls /etc/gitlab-runner
+  - ls /opt
   tags:
     - docker
