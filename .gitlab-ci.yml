@@ -15,7 +15,7 @@ variables:
   # 【根据应用更改】【通用】示例mvn_deploy,mvn_install,gradle编译工具,不能为空
   BUILD_TOOL: mvn_install
   # 【根据应用更改】【镜像】
-  BUILD_IMAGE: harbor.mvmyun.com/library/maven:3.6.3-jdk-11
+  BUILD_IMAGE: harbor.mvmyun.com/library/maven:3.6.2-jdk-14
   DEPLOY_IMAGE: registry.cn-hangzhou.aliyuncs.com/haoshuwei24/kubectl:1.16.6
   # 【根据应用更改】【可选】下游项目触发TOKEN
   HOTEL_QUNAR_API_TOKEN: a7d6a429fe60c5f64588781b543f9d
