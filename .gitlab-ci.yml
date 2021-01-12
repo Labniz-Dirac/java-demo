@@ -1,7 +1,7 @@
 image: harbor.mvmyun.com/library/alpine:latest
 variables:
-  MAVEN_CLI_OPTS: "-gs /opt/gitlab-runner/cache/.m2/settings.xml --batch-mode"
-  MAVEN_OPTS: "-Dmaven.repo.local=/opt/gitlab-runner/cache/.m2/repository"
+  MAVEN_CLI_OPTS: "-gs /opt/settings.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=/opt/cache/.m2/repository"
   #发版dev测试环境
   K8S_ENVIRONMENT: dev
   #发版应用
@@ -33,8 +33,9 @@ package:
   script:
   #- ll /opt/gitlab-runner/cache/.m2/
   #- mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
-  #- mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
   #- gradle --stacktrace jib
   - ls /opt
+  - ls /opt/cache/.m2/repository
+  - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
   tags:
     - docker
