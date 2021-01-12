@@ -1,27 +1,21 @@
 image: harbor.mvmyun.com/library/alpine:latest
 variables:
-  # 【根据应用更改】【通用】mvn编译指定配置文件
   MAVEN_CLI_OPTS: "-gs /opt/settings.xml --batch-mode"
-  # 【根据应用更改】【通用】mvn编译指定本地仓库
   MAVEN_OPTS: "-Dmaven.repo.local=/opt/cache/.m2/repository"
-  # 【根据应用更改】【容器环境】定义发版环境dev,pro
+  #发版dev测试环境
   K8S_ENVIRONMENT: dev
-  # 【根据应用更改】【容器环境】发版项目,每个项目都不一样
-  APPLICATION: demo
-  # 【根据应用更改】【通用】镜像仓库用户
+  #发版应用
+  APPLICATION: hotel-qunar-order
+  #镜像仓库用户
   CONTAINER_REPO_USERNAME: ${HARBOR_REPO_USERNAME}
-  # 【根据应用更改】【通用】镜像仓库密码
+  #镜像仓库密码
   CONTAINER_REPO_PASSWORD: ${HARBOR_REPO_PASSWORD}
-  # 【根据应用更改】【通用】示例mvn_deploy,mvn_install,gradle编译工具,不能为空
-  BUILD_TOOL: mvn_install
-  # 【根据应用更改】【镜像】
-  BUILD_IMAGE: harbor.mvmyun.com/library/maven:3.6.2-jdk-14
-  DEPLOY_IMAGE: registry.cn-hangzhou.aliyuncs.com/haoshuwei24/kubectl:1.16.6
-  # 【根据应用更改】【可选】下游项目触发TOKEN
+  #mvn_deploy,mvn_install,gradle编译工具
+  BUILD_TOOL: mvn_deploy
+  #下游项目触发TOKEN
   HOTEL_QUNAR_API_TOKEN: a7d6a429fe60c5f64588781b543f9d
   HOTEL_QUNAR_ORDER_TOKEN: 6c898fc00b8d62c9a970c1f79374f5
   REF_NAME: master
-
 
 services:
   - docker:dind
@@ -34,23 +28,20 @@ cache:
 
 #定义流程
 stages:
-  - build
+  - package
 
 before_script:
   - echo "开始前脚本"
-
-build_image_mvn_install:
-  stage: build
+  
+package:
   image: harbor.mvmyun.com/library/maven:3.6.2-jdk-14
+  stage: package
   script:
   #- ll /opt/gitlab-runner/cache/.m2/
   #- mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
   #- gradle --stacktrace jib
-  - echo ${APPLICATION}
-  - mvn -version
+  - ls /opt
+  - ls /opt/cache/.m2/repository
   - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
   tags:
     - docker
-  rules:
-    - if: '$CI_COMMIT_BRANCH  ==  "master" && $BUILD_TOOL == "mvn_install"'
-  
