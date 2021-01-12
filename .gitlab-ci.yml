@@ -23,7 +23,7 @@ services:
 
 cache:
   paths:
-  - .gradle/
+  - /opt/cache/.m2
 
 
 #定义流程
