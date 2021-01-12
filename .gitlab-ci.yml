@@ -41,7 +41,7 @@ before_script:
 
 build_image_mvn_install:
   stage: build
-  image: ${BUILD_IMAGE}
+  image: harbor.mvmyun.com/library/maven:3.6.2-jdk-14
   script:
   #- ll /opt/gitlab-runner/cache/.m2/
   #- mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
