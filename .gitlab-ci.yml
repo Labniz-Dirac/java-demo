@@ -7,7 +7,7 @@ variables:
   # 【根据应用更改】【容器环境】定义发版环境dev,pro
   K8S_ENVIRONMENT: dev
   # 【根据应用更改】【容器环境】发版项目,每个项目都不一样
-  APPLICATION: hotel-qunar-order
+  APPLICATION: demo
   # 【根据应用更改】【通用】镜像仓库用户
   CONTAINER_REPO_USERNAME: ${HARBOR_REPO_USERNAME}
   # 【根据应用更改】【通用】镜像仓库密码
@@ -38,19 +38,6 @@ stages:
 
 before_script:
   - echo "开始前脚本"
-  
-package:
-  image: harbor.mvmyun.com/library/maven:3.6.2-jdk-14
-  stage: package
-  script:
-  #- ll /opt/gitlab-runner/cache/.m2/
-  #- mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
-  #- gradle --stacktrace jib
-  - ls /opt
-  - ls /opt/cache/.m2/repository
-  - mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
-  tags:
-    - docker
 
 build_image_mvn_install:
   stage: build
@@ -61,7 +48,7 @@ build_image_mvn_install:
   #- gradle --stacktrace jib
   - echo ${APPLICATION}
   - mvn -version
-  - mvn -B -q $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package -Pdev
+  - mvn -B -q $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
   tags:
     - docker
   rules:
