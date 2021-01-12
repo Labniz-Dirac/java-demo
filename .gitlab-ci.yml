@@ -1,31 +1,40 @@
-# 设置执行镜像
-image: busybox:latest
+image: harbor.mvmyun.com/library/alpine:latest
+variables:
+  MAVEN_CLI_OPTS: "-gs /opt/gitlab-runner/cache/.m2/settings.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=/opt/gitlab-runner/cache/.m2/repository"
+  #发版dev测试环境
+  K8S_ENVIRONMENT: dev
+  #发版应用
+  APPLICATION: hotel-qunar-order
+  #镜像仓库用户
+  CONTAINER_REPO_USERNAME: ${HARBOR_REPO_USERNAME}
+  #镜像仓库密码
+  CONTAINER_REPO_PASSWORD: ${HARBOR_REPO_PASSWORD}
+  #mvn_deploy,mvn_install,gradle编译工具
+  BUILD_TOOL: mvn_deploy
+  #下游项目触发TOKEN
+  HOTEL_QUNAR_API_TOKEN: a7d6a429fe60c5f64588781b543f9d
+  HOTEL_QUNAR_ORDER_TOKEN: 6c898fc00b8d62c9a970c1f79374f5
+  REF_NAME: master
 
-# 整个pipeline有两个stage
-stages:
-- build
-- test
-
-# 定义全局缓存，缓存的key来自分支信息，缓存位置是vendor文件夹
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
   paths:
-  - vendor/
+  - .gradle/
 
-before_script:
-  - echo "Before script section"
 
-after_script:
-  - echo "After script section"
+#定义流程
+stages:
+  - package
 
-build1:
-  stage: build
-  tags:
-  - k8s
+
+package:
+  image: harbor.mvmyun.com/library/gradle:6.7.1-jdk11
+  stage: package
   script:
-    - echo "将内容写入缓存"
-    - mkdir /vendor
-    - echo "build" > /vendor/hello.txt
-    - pwd
-    - ls /
-    - ls -a
+  #- ll /opt/gitlab-runner/cache/.m2/
+  #- mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
+  #- mvn $MAVEN_CLI_OPTS $MAVEN_OPTS -Dmaven.test.skip=true package
+  #- gradle --stacktrace jib
+  - ls /etc/gitlab-runner
+  tags:
+    - docker
